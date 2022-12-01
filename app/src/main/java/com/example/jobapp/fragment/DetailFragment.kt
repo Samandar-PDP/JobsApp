@@ -36,7 +36,6 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                 loadUrl(savedJob.url!!)
                 settings.apply {
                     javaScriptEnabled = true
-                    setAppCacheEnabled(true)
                     cacheMode = WebSettings.LOAD_DEFAULT
                     setSupportZoom(false)
                     builtInZoomControls = false

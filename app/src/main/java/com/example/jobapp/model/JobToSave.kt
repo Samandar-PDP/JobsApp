@@ -3,7 +3,7 @@ package com.example.jobapp.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "job")
+@Entity(tableName = "job_table")
 data class JobToSave(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
