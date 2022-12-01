@@ -35,7 +35,7 @@
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/todo"
                 android:src="@drawable/ic_baseline_delete_outline_24"
-                android:visibility="gone" />
+                android:visibility="invisible" />
 
         </LinearLayout>
 

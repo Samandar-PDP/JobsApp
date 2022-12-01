@@ -12,4 +12,5 @@ class JobRepository(
     suspend fun saveJob(job: JobToSave) = db.addFavoriteJob(job)
     fun getAllFavoriteJobs() = db.getAllFavoriteJob()
     suspend fun deleteJob(job: JobToSave) = db.deleteFavJob(job)
+    suspend fun searchJob(query: String) = apiService.searchRemoteJob(query)
 }

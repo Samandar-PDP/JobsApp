@@ -9,14 +9,18 @@ import com.example.jobapp.model.JobToSave
 import com.example.jobapp.model.RemoteJob
 import com.example.jobapp.repository.JobRepository
 import com.example.jobapp.utils.Resource
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class MainViewModel(
     app: Application,
     private val repository: JobRepository
 ) : AndroidViewModel(app) {
-    private val _remoteJobs: MutableLiveData<Resource<RemoteJob>> = MutableLiveData()
+    private var _remoteJobs: MutableLiveData<Resource<RemoteJob>> = MutableLiveData()
     val remoteJobs: LiveData<Resource<RemoteJob>> get() = _remoteJobs
+
+    private val _searchedJobs: MutableLiveData<Resource<RemoteJob>> = MutableLiveData()
+    val searchedJobs: LiveData<Resource<RemoteJob>> get() = _searchedJobs
 
     init {
         getAllRemoteJobs()
@@ -25,6 +29,7 @@ class MainViewModel(
     fun getAllRemoteJobs() {
         viewModelScope.launch {
             _remoteJobs.postValue(Resource.Loading())
+            delay(1000L)
             try {
                 val response = repository.getAllJobs()
                 if (response.isSuccessful) {
@@ -47,5 +52,23 @@ class MainViewModel(
         viewModelScope.launch {
             repository.deleteJob(job)
         }
+    }
+
+    fun searchJob(query: String) {
+        viewModelScope.launch {
+            _searchedJobs.postValue(Resource.Loading())
+            try {
+                val response = repository.searchJob(query)
+                if (response.isSuccessful) {
+                    _searchedJobs.postValue(Resource.Success(response.body()!!))
+                }
+            } catch (e: Exception) {
+                _searchedJobs.postValue(Resource.Error(e.message!!))
+            }
+        }
+    }
+
+    fun empty() {
+        _remoteJobs = MutableLiveData()
     }
 }
