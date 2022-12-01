@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.jobapp.model.JobToSave
 import com.example.jobapp.model.RemoteJob
 import com.example.jobapp.repository.JobRepository
 import com.example.jobapp.utils.Resource
@@ -32,6 +33,19 @@ class MainViewModel(
             } catch (e: Exception) {
                 _remoteJobs.postValue(Resource.Error(e.message!!))
             }
+        }
+    }
+
+    fun getAllLocalJobs() = repository.getAllFavoriteJobs()
+    fun saveFavoriteJob(job: JobToSave) {
+        viewModelScope.launch {
+            repository.saveJob(job)
+        }
+    }
+
+    fun deleteJob(job: JobToSave) {
+        viewModelScope.launch {
+            repository.deleteJob(job)
         }
     }
 }

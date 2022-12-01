@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "job")
 data class JobToSave(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    val id: Int = 0,
     val candidateRequiredLocation: String?,
     val category: String?,
     val companyLogoUrl: String?,
